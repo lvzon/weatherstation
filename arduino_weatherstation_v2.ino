@@ -13,10 +13,14 @@
 // Uncomment to enable verbose output
 //#define VERBOSE             1
 
-// Echo data to serial port
+// Uncomment to echo data to serial port
 //#define ECHO_TO_SERIAL   1 
 
-// Read ressure sensor 
+// Uncomment to set RTC clock to compilation time (only do this once, then comment it out again)
+// Also, make sure your computer clock is set to UTC if you do this 
+//#define SET_RTC
+
+// Uncomment to read air pressure sensor 
 #define READ_PRESSURE 1
 
 #ifdef READ_PRESSURE
@@ -191,14 +195,15 @@ void setup () {
         
         Serial.println("RTC is NOT running!");
         
+        #ifdef SET_RTC
         // following line sets the RTC to the date & time this sketch was compiled
         rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
         DateTime t = DateTime(rtc.now().unixtime() + TIME_ADJUSTMENT);
         rtc.adjust(t); 
-        
         // This line sets the RTC with an explicit date & time, for example to set
         // January 21, 2014 at 3am you would call:
         // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+        #endif
     }
 
     if (!temphum.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
