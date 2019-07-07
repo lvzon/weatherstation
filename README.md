@@ -13,7 +13,7 @@ For a description of the project, see: http://gnuritas.org/weatherstation.html
    - To measure air pressure I used an [LPS25H air pressure sensor](https://www.pololu.com/product/2724), which has an accuracy of ±0.2 mbar. Again, other good-quality sensors can also be used. This sensor is also connected to the I2C bus.
    - To measure soil temperature I used a waterproof [DS18B20 temperature sensor](https://www.itead.cc/waterproof-ds18b20-temperature-sensor.html). Not the most accurate sensor, but cheap and good enough to give a reasonable indication, and several sensors can be used on one connection (a one-wire bus).
    - For time keeping (and possibly data storage in future), I used a [data logger shield](https://learn.adafruit.com/adafruit-data-logger-shield), which includes an SD-card slot and a battery-powered real-time clock (RTC). The shield I have uses a DS1307 RTC, but other shields may provide other RTC chips (which may actually be better).
-   - For communication I used a [modem shield with a SimCom SIM808 cellular modem](https://www.elecrow.com/wiki/index.php?title=SIM808_GPRS/GSM%2BGPS_Shield_v1.1). There are various shields available, with various SimCom modem types (SIM80x, SIM90x) that all use basically the same [AT-command set](https://www.elecrow.com/wiki/images/2/20/SIM800_Series_AT_Command_Manual_V1.09.pdf). These modems are inexpensive (under $10), although they are limited to GPRS/2G, and the shields for Arduino may actually be quite costly. You can also look for a cheap SimCom modem module and connect it to the relevant Arduino pins, but note that the modem is 3.3V so you may need to use a level shifter if you use a 5V Arduino board. Other modem brands can also be used, but will probably require different AT-commands. A SIM-card will also be needed in order to send the data over a cellular data link. I used an international roaming IoT SIM from Tele2, but there are many, many companies that can provide you with cheap M2M data SIM cards, either prepaid or with a subscription plan. 
+   - For communication I used a [modem shield with a SimCom SIM808 cellular modem](https://www.elecrow.com/wiki/index.php?title=SIM808_GPRS/GSM%2BGPS_Shield_v1.1). There are various shields available, with various SimCom modem types (SIM80x, SIM90x) that all use basically the same [AT-command set](https://www.elecrow.com/wiki/images/2/20/SIM800_Series_AT_Command_Manual_V1.09.pdf). These modems are inexpensive (under $10), although they are limited to GPRS/2G, and the shields for Arduino may actually be quite costly. You can also look for a cheap SimCom modem module and connect it to the relevant Arduino pins, but note that the modem is 3.3V so you may need to use a level shifter if you use a 5V Arduino board. Other modem brands can also be used, but will probably require different AT-commands. A SIM-card will also be needed in order to send the data over a cellular data link. There are many companies that can provide you with cheap M2M data SIM cards, either prepaid or with a subscription plan. 
 
 
 ### Libraries used
@@ -45,7 +45,7 @@ D12 SPI MISO
 D13 SPI clock
 ```
 
-The I2C-bus, needed for the temperature/humidity and pressure sensors, use the following Arduino pins:
+The I2C-bus, needed for the temperature/humidity and pressure sensors, uses the following Arduino pins:
 ```
 A4  I2C SDA (data)
 A5  I2C SCL (clock)
@@ -62,6 +62,7 @@ D4  DS18B20 data line (soil temperature sensor, yellow wire), with 4.7 kOhm pull
 
 ### Configuration
 
-You'll need to enter the APN (access point name) of your SIM-card in the Arduino sketch, in the string after after `#define MODEM_START_TASK`. You will also need to enter the address and the port of the server that you are using to run the Python script, in the string after `#define MODEM_START_IP`.
+You'll need to enter the APN (access point name) of your SIM-card in the Arduino sketch, in the string after after `#define MODEM_START_TASK`. You will also need to enter the address (and possibly the port) of the server that you are using to run the Python script, in the string after `#define MODEM_START_IP`.   
+If you use different sensors or a different RTC than the ones listed above, you may need to use different libraries and function calls to read the sensors, and possibly a different class to read the RTC. You'll want to consult the library documentation for your sensor, and/or the [RTClib examples](https://github.com/adafruit/RTClib/tree/master/examples) for various clock chips. 
 
 In the server script, you may need to configure the port it listens on (the default is 9000). You will also need to sign up for the [Citizen Weather Observer Program (CWOP)](http://www.wxqa.com/SIGN-UP.html) and [Weather Underground](https://www.wunderground.com/signup) and enter ID/login/location details in the Python script, or disable reporting to these services.
