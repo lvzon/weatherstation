@@ -64,4 +64,4 @@ D4  DS18B20 data line (soil temperature sensor, yellow wire), with 4.7 kOhm pull
 
 You'll need to enter the APN (access point name) of your SIM-card in the Arduino sketch, in the string after after `#define MODEM_START_TASK`. You will also need to enter the address and the port of the server that you are using to run the Python script, in the string after `#define MODEM_START_IP`.
 
-In the server script, you may need to configure the port it listens on (the default is 9000). You will also need to enter ID/login details for the the [Citizen Weather Observer Program (CWOP)](http://www.wxqa.com/) and [Weather Underground](https://www.wunderground.com/weatherstation/overview.asp), or disable reporting to these services.
+In the server script, you may need to configure the port it listens on (the default is 9000). You will also need to sign up for the [Citizen Weather Observer Program (CWOP)](http://www.wxqa.com/SIGN-UP.html) and [Weather Underground](https://www.wunderground.com/signup) and enter ID/login/location details in the Python script, or disable reporting to these services.
